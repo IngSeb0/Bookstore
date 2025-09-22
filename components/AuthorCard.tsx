@@ -20,8 +20,20 @@ export default function AuthorCard({ author, onEdit, onDelete }: Props) {
         <p className="text-sm text-gray-600">{author.description}</p>
       </div>
       <div className="flex gap-2">
-        <button onClick={() => onEdit(author)} className="px-3 py-1 border rounded">Editar</button>
-        <button onClick={() => onDelete(author.id)} className="px-3 py-1 border rounded bg-red-50 text-red-600">Eliminar</button>
+        <button
+          onClick={() => onEdit(author)}
+          className="px-3 py-1 rounded font-semibold border border-blue-600 text-blue-600 bg-white shadow-sm
+            hover:bg-blue-50 hover:text-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-colors duration-200"
+        >
+          Editar
+        </button>
+        <button
+          onClick={() => onDelete(author.id)}
+          className="px-3 py-1 rounded font-semibold border border-red-500 text-red-600 bg-red-50 shadow-sm
+            hover:bg-red-100 hover:text-red-700 focus:ring-2 focus:ring-red-300 focus:outline-none transition-colors duration-200"
+        >
+          Eliminar
+        </button>
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Author } from "../types/author";
-
 const authorSchema = z.object({
   name: z.string().min(2, "Nombre muy corto"),
   description: z.string().optional(),
@@ -12,7 +11,6 @@ const authorSchema = z.object({
 });
 
 type FormData = z.infer<typeof authorSchema>;
-
 type Props = {
   initialValues?: Partial<Author>;
   onSubmit: (data: FormData) => Promise<void> | void;
@@ -55,7 +53,12 @@ export default function AuthorForm({ initialValues, onSubmit, submitLabel = "Gua
       </div>
 
       <div>
-        <button disabled={isSubmitting} type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="px-4 py-2 rounded font-semibold shadow transition-colors duration-200
+            bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           {submitLabel}
         </button>
       </div>
