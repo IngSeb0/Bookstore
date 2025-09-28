@@ -2,7 +2,7 @@ version: '3.8'
 services:
   backend:
     build:
-      context: C:\Users\Acer\OneDrive - Universidad de los andes\Sexto Semestre\WEB\Nueva carpeta\bookstore-back
+      context: ..\bookstore-back
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
