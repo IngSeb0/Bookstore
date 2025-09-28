@@ -17,7 +17,6 @@ const authorSchema = z.object({
   prizeName: z.string().min(1, "Nombre del premio es obligatorio"),
   prizeDescription: z.string().min(1, "Descripción del premio es obligatoria"),
   prizePremiationDate: z.string().optional(),
-  prizeOrganization: z.string().optional()
 });
 
 type FormData = z.infer<typeof authorSchema>;
@@ -44,7 +43,6 @@ export default function AuthorForm({ initialValues, onSubmit, submitLabel = "Gua
       prizeName: "",
       prizeDescription: "",
       prizePremiationDate: "",
-      prizeOrganization: ""
     }
   })
   return (
@@ -100,10 +98,7 @@ export default function AuthorForm({ initialValues, onSubmit, submitLabel = "Gua
         <label className="block text-sm font-medium">Fecha de premiación</label>
         <input type="date" {...register("prizePremiationDate", { required: true })} className="mt-1 block w-full border rounded p-2" />
       </div>
-      <div>
-        <label className="block text-sm font-medium">Organización</label>
-        <input {...register("prizeOrganization")} className="mt-1 block w-full border rounded p-2" />
-      </div>
+    
       <div>
         <button
           disabled={isSubmitting}

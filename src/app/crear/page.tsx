@@ -11,6 +11,9 @@ type Book = {
 type Prize = {
   id: number | string;
 };
+type Organization = {
+  id: number | string;
+};
 
 export default function CrearPage() {
   const { createAuthor } = useAuthors();
@@ -23,18 +26,22 @@ export default function CrearPage() {
         isbn: data.bookIsbn,
         image: data.bookImage,
         description: data.bookDescription,
-        editorial: { id: 123231231232 ,name: "shjhjhi" }
+        editorial: { id: 1000 ,name: "BLOOMSBURY" }
       };
       if (data.bookPublishingDate && data.bookPublishingDate !== "") {
         bookPayload.publishingDate = data.bookPublishingDate;
       }
       const book: Book = await apiPOST("/books", bookPayload);
+      const orgPayload = {
+        name: "Premios Nacionales",
+        tipoOrganizacion: "PRIVADA"
+      };
+      const organization: Organization = await apiPOST("/organizations", orgPayload);
 
       const prizePayload: any = {
         name: data.prizeName,
         description: data.prizeDescription,
-        organization: {id: 1233213123,  name: "Premios Nacionales", tipoOrganizacion: "PRIVADA" }
-      };
+        organization: organization};
       if (data.prizePremiationDate && data.prizePremiationDate !== "") {
         prizePayload.premiationDate = data.prizePremiationDate;
       }

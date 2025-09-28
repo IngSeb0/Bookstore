@@ -1,0 +1,45 @@
+# ======================
+# FASE 1: BUILDER
+# ======================
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+# El comodín está bien, pero el nombre del lockfile debe ser exacto (package-lock.json)
+COPY package.json package-lock.json ./ 
+
+# Instalar las dependencias de desarrollo y producción
+RUN npm install
+
+# Copiar el código fuente completo
+COPY . .
+
+# Deshabilita ESLint durante la compilación, solo si es absolutamente necesario
+ENV NEXT_DISABLE_ESLINT=1
+
+# Compilación: Este comando debe TERMINAR. Si falla, el problema está en tu código.
+RUN npm run build 
+
+# ======================
+# FASE 2: RUNNER (PRODUCCIÓN)
+# ======================
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+# Establece el puerto de escucha (3000 es el default)
+ENV PORT=3000
+
+# Copiar la carpeta 'standalone' generada por Next.js
+# Esta carpeta contiene solo lo necesario para correr la app, incluyendo node_modules
+COPY --from=builder /app/.next/standalone ./
+
+# Copiar los assets públicos y estáticos (si aplica)
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/static ./.next/static 
+
+EXPOSE 3000
+
+# Ejecutar el servidor compilado de producción
+CMD ["node", "server.js"] 
+# Si tu package.json tiene un script "start" que usa "next start", puedes usar CMD ["npm", "start"]
